@@ -1,0 +1,18 @@
+# terminal docker compose up -d
+services:
+  postgres:
+  # 16 é a versão do postfreSQL e alpine sinaliza que é a versão de imagem ultra compacta e leve, baseada em distribução linux minima.
+    image: postgres:16-alpine
+    container_name: bootcamp-treinos-api-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: bootcamp-treinos-api
+    ports:
+    # lado direito é o computador (host) e o lado esquerdo é a porta dentro do container
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
