@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
-  name String
-  email String
-  emailVerified Boolean 
-  image String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String   @id @default(uuid())
+  name          String
+  email         String
+  emailVerified Boolean
+  image         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   workoutPlans WorkoutPlan[] // lista de planos de treino
 }
@@ -22,17 +22,17 @@ model User {
 model WorkoutPlan {
   user User @relation(fields: [userId], references: [id]) //1 usuário
 
-  id String @id @default(uuid())
-  name String
-  userId String
-  isActive Boolean @default(true)
+  id        String   @id @default(uuid())
+  name      String
+  userId    String
+  isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   workoutDays WorkoutDay[] // lista de dias de treino
 }
 
-enum WeekDay{
+enum WeekDay {
   MONDAY
   TUESDAY
   WEDNESDAY
@@ -45,36 +45,36 @@ enum WeekDay{
 model WorkoutDay {
   workoutPlan WorkoutPlan @relation(fields: [workoutPlanId], references: [id]) //1 dia de treino pertence a uma lista de dias de treino
 
-  id String @id @default(uuid())
-  name String
-  workoutPlanId String
-  isRest Boolean @default(false)
-  weekDay WeekDay 
+  id                         String   @id @default(uuid())
+  name                       String
+  workoutPlanId              String
+  isRest                     Boolean  @default(false)
+  weekDay                    WeekDay
   estimatedDurationInSeconds Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt                  DateTime @default(now())
+  updatedAt                  DateTime @updatedAt
 
   exercicies WorkoutExercise[] // lista de exercicios
 }
 
 model WorkoutExercise {
- workoutDay WorkoutDay @relation(fields: [workoutDayId], references: [id])
+  workoutDay WorkoutDay @relation(fields: [workoutDayId], references: [id])
 
-  id String @id @default(uuid())
-  order Int
-  name String
-  sets Int
-  reps Int
+  id                String   @id @default(uuid())
+  order             Int
+  name              String
+  sets              Int
+  reps              Int
   restTimeInSeconds Int
-  workoutDayId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  workoutDayId      String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
 
 model UserWorkoutSession {
-  id String @id @default(uuid())
-  userId String
+  id           String    @id @default(uuid())
+  userId       String
   workoutDayId String
-  startedAt DateTime @default(now())
-  completedAt DateTime?
+  startedAt    DateTime  @default(now())
+  completedAt  DateTime?
 }
