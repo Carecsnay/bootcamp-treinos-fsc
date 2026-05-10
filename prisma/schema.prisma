@@ -59,7 +59,7 @@ model WorkoutDay {
   createdAt                  DateTime @default(now())
   updatedAt                  DateTime @updatedAt
 
-  exercicies WorkoutExercise[] // lista de exercicios
+  exercices WorkoutExercise[] // lista de exercicios
 }
 
 model WorkoutExercise {
