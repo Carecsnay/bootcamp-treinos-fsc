@@ -35,7 +35,7 @@ await app.register(fastifySwagger, {
     servers: [
       {
         description: "Localhost",
-        url: "http://localhost:8080",
+        url: "http://localhost:3000",
       },
     ],
   },
@@ -233,7 +233,7 @@ app.route({
 });
 
 try {
-  await app.listen({ port: Number(process.env.PORT) || 8080 });
+  await app.listen({ port: Number(process.env.PORT) || 3000 });
 } catch (err) {
   app.log.error(err);
   process.exit(1);
