@@ -14,8 +14,12 @@ import {
 import z from "zod";
 
 import { NotFoundError } from "./errors/index.js";
-import { WeekDay } from "./generated/prisma/enums.js";
 import { auth } from "./lib/auth.js";
+import {
+  commonErrorResponses,
+  commonWorkoutPlanResponses,
+  WorkoutPlanSchema,
+} from "./schemas/index.js";
 import { CreateWorkoutPlan } from "./usecases/CreateWorkoutPlan.js";
 
 const app = Fastify({
@@ -71,64 +75,10 @@ app.withTypeProvider<ZodTypeProvider>().route({
   method: "POST",
   url: "/workout-plans",
   schema: {
-    body: z.object({
-      name: z.string().trim().min(1),
-      workoutDays: z.array(
-        z.object({
-          name: z.string().trim().min(1),
-          weekDay: z.enum(WeekDay),
-          isRest: z.boolean().default(false),
-          estimatedDurationInSeconds: z.number().min(1),
-          exercises: z.array(
-            z.object({
-              order: z.number().min(0),
-              name: z.string().trim().min(1),
-              sets: z.number().min(1),
-              reps: z.number().min(1),
-              restTimeInSeconds: z.number().min(1),
-            }),
-          ),
-        }),
-      ),
-    }),
+    body: WorkoutPlanSchema.omit({ id: true }),
     response: {
-      201: z.object({
-        id: z.uuid(),
-        name: z.string().trim().min(1),
-        workoutDays: z.array(
-          z.object({
-            name: z.string().trim().min(1),
-            weekDay: z.enum(WeekDay),
-            isRest: z.boolean().default(false),
-            estimatedDurationInSeconds: z.number().min(1),
-            exercises: z.array(
-              z.object({
-                order: z.number().min(0),
-                name: z.string().trim().min(1),
-                sets: z.number().min(1),
-                reps: z.number().min(1),
-                restTimeInSeconds: z.number().min(1),
-              }),
-            ),
-          }),
-        ),
-      }),
-      400: z.object({
-        error: z.string(),
-        code: z.string(),
-      }),
-      401: z.object({
-        error: z.string(),
-        code: z.string(),
-      }),
-      404: z.object({
-        error: z.string(),
-        code: z.string(),
-      }),
-      500: z.object({
-        error: z.string(),
-        code: z.string(),
-      }),
+      ...commonWorkoutPlanResponses,
+      ...commonErrorResponses,
     },
   },
   handler: async (request, reply) => {
