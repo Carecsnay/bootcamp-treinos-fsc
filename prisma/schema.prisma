@@ -30,7 +30,7 @@ model User {
 }
 
 model WorkoutPlan {
-  user        User         @relation(fields: [userId], references: [id])
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   id          String       @id @default(uuid())
   name        String
   userId      String
@@ -51,7 +51,7 @@ enum WeekDay {
 }
 
 model WorkoutDay {
-  workoutPlan                WorkoutPlan       @relation(fields: [workoutPlanId], references: [id])
+  workoutPlan                WorkoutPlan       @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
   id                         String            @id @default(uuid())
   name                       String
   workoutPlanId              String
@@ -65,7 +65,7 @@ model WorkoutDay {
 }
 
 model WorkoutSession {
-  workoutDay   WorkoutDay @relation(fields: [workoutDayId], references: [id])
+  workoutDay   WorkoutDay @relation(fields: [workoutDayId], references: [id], onDelete: Cascade)
   id           String     @id @default(uuid())
   workoutDayId String
   startAt      DateTime   @default(now()) @db.Timestamptz()
@@ -75,7 +75,7 @@ model WorkoutSession {
 }
 
 model WorkoutExercise {
-  workoutDay        WorkoutDay @relation(fields: [workoutDayId], references: [id])
+  workoutDay        WorkoutDay @relation(fields: [workoutDayId], references: [id], onDelete: Cascade)
   id                String     @id @default(uuid())
   name              String
   order             Int
