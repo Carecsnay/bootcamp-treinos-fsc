@@ -62,6 +62,7 @@ model WorkoutDay {
   updatedAt                  DateTime          @updatedAt @db.Timestamptz()
   exercises                  WorkoutExercise[]
   workoutSessions            WorkoutSession[]
+  coverImageUrl              String?
 }
 
 model WorkoutSession {
