@@ -13,6 +13,7 @@ import {
 import z from "zod";
 
 import { auth } from "./lib/auth.js";
+import { homeRoutes } from "./routes/home.js";
 import { workoutPlanRoutes } from "./routes/workout-plan.js";
 
 const app = Fastify({
@@ -68,6 +69,8 @@ await app.register(fastifyApiReference, {
 await app.register(workoutPlanRoutes, {
   prefix: "/workout-plans",
 });
+
+await app.register(homeRoutes, { prefix: "/home" });
 
 // Controller
 
